@@ -47,12 +47,12 @@ isr13:
 	pusha	
     mov ax, ds               ; Lower 16-bits of eax = ds.
     push eax                 ; save the data segment descriptor
-    mov ax, 0x18  ; load the kernel data segment descriptor
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
+;    mov ax, 0x18  ; load the kernel data segment descriptor
+ ;   mov ds, ax
+  ;  mov es, ax
+   ; mov fs, ax
+;    mov gs, ax
+ ;   mov ss, ax
 
     call isr13_handler    
     
@@ -67,16 +67,9 @@ isr13:
    ;Now we tell the first PIC that the IRQ is handled
    mov al, 0x20
    out 0x20, al    
-
-    mov bx,0x10        ; reload the original data segment descriptor
-    mov ds, bx
-    mov es, bx
-    mov fs, bx
-    mov ss,bx
-    mov gs, bx
-	mov esp, 0xffff
-	sti
-	call bad_loop
+   .infloop
+   hlt
+   jmp .infloop
 
 
 ISR_ERRCODE   14
